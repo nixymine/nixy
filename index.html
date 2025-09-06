@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NIXYMINE - Download & Enjoy</title>
+    
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
     <meta name="description" content="Temukan dan unduh ribuan aplikasi dan game Android terbaru, aman, dan gratis di NIXYMINE.">
     <meta name="keywords" content="download aplikasi, download game, apk android, aplikasi gratis, game terbaru, NIXYMINE">
     <meta name="author" content="NIXYMINE">
     <meta name="robots" content="index, follow">
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.nixymine-example.com/">
     <meta property="og:title" content="NIXYMINE - Download & Enjoy">
     <meta property="og:description" content="Portal terbaik untuk mencari dan mengunduh aplikasi dan game Android terbaru.">
     <meta property="og:image" content="https://example.com/social-image.jpg">
-
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.nixymine-example.com/">
     <meta property="twitter:title" content="NIXYMINE - Download & Enjoy">
     <meta property="twitter:description" content="Portal terbaik untuk mencari dan mengunduh aplikasi dan game Android terbaru.">
     <meta property="twitter:image" content="https://example.com/social-image.jpg">
-
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -39,26 +38,10 @@
       "mainEntity": {
         "@type": "WebPage",
         "hasPart": [
-          {
-            "@type": "SiteNavigationElement",
-            "name": "Games",
-            "url": "https://www.nixymine-example.com/games"
-          },
-          {
-            "@type": "SiteNavigationElement",
-            "name": "Apps",
-            "url": "https://www.nixymine-example.com/apps"
-          },
-          {
-            "@type": "SiteNavigationElement",
-            "name": "Blog",
-            "url": "https://www.nixymine-example.com/blog"
-          },
-          {
-            "@type": "SiteNavigationElement",
-            "name": "Contact",
-            "url": "https://www.nixymine-example.com/contact"
-          }
+          {"@type": "SiteNavigationElement", "name": "Games", "url": "https://www.nixymine-example.com/games"},
+          {"@type": "SiteNavigationElement", "name": "Apps", "url": "https://www.nixymine-example.com/apps"},
+          {"@type": "SiteNavigationElement", "name": "Blog", "url": "https://www.nixymine-example.com/blog"},
+          {"@type": "SiteNavigationElement", "name": "Contact", "url": "https://www.nixymine-example.com/contact"}
         ]
       }
     }
@@ -75,7 +58,7 @@
             --header-bg: #ffffff;
             --shadow-color: rgba(0, 0, 0, 0.08);
             --border-color: #e9e9e9;
-            --blue-color: #0081E7; 
+            --green-color: #28a745; 
             --green-light-bg: #e9f6ec; 
             --blue-color: #007bff; 
             --red-color: #dc3545; 
@@ -83,7 +66,8 @@
             --yellow-color: #ffc107; 
             --teal-color: #20c997; 
             --orange-color: #fd7e14; 
-            --transition-smooth: all 0.3s ease-in-out;
+            /* UPGRADE: Animasi lebih halus */
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         body.dark-mode {
@@ -233,10 +217,18 @@
         }
         #recent-searches-list li:hover { color: var(--blue-color); }
 
-        /* Konten Utama */
-        .hero-banner {
+        /* STYLE BARU: Banner */
+        .banner-container {
             margin-bottom: 25px;
         }
+        .banner-container img {
+            width: 100%;
+            display: block;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        /* Konten Utama */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -270,7 +262,7 @@
             color: var(--text-color);
         }
         .view-all-btn {
-            background-color: var(--blue-color);
+            background-color: var(--green-color);
             color: white;
             text-decoration: none;
             padding: 8px 16px;
@@ -281,7 +273,7 @@
             cursor: pointer;
             border: none;
         }
-        .view-all-btn:hover { background-color: red; }
+        .view-all-btn:hover { background-color: #218838; }
 
         /* List Aplikasi */
         .app-list { display: grid; gap: 15px; }
@@ -295,6 +287,7 @@
             transition: var(--transition-smooth);
             align-items: flex-start;
             text-decoration: none;
+            opacity: 0; /* Mulai dengan transparan untuk animasi */
         }
         .app-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px var(--shadow-color); }
         
@@ -355,7 +348,7 @@
             display: none;
         }
         .app-list.show-all .app-card {
-            display: flex;
+            display: flex !important;
         }
 
         .results-list .app-card:nth-child(n + 21) {
@@ -443,6 +436,21 @@
             border-top: 1px solid var(--border-color);
         }
 
+        /* --- ANIMASI BARU --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .card-anim {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
     </style>
 </head>
 <body>
@@ -468,7 +476,7 @@
             <a href="#games-section" class="menu-grid-item games"><i class="fa-solid fa-gamepad"></i><span>Games</span></a>
             <a href="#apps-section" class="menu-grid-item apps"><i class="fa-solid fa-th-large"></i><span>Apps</span></a>
             <a href="#" class="menu-grid-item blog"><i class="fa-solid fa-file-alt"></i><span>Blog</span></a>
-            <a href="#" class="menu-grid-item faq"><i class="fa fa-question-circle"></i><span>FAQ</span></a>
+            <a href="#" class="menu-grid-item faq"><i class="fab fa-telegram-plan"></i><span>FAQ</span></a>
             <button id="dark-mode-toggle" class="menu-grid-item dark-mode">
                 <i class="fa-solid fa-moon"></i><span>Dark Mode</span> </button>
                 <a href="#" class="menu-grid-item telegram-bg">
@@ -500,10 +508,10 @@
     <main>
         <div class="container">
             <div id="main-content">
-                
-                <div class="hero-banner">
-                    <img src="nx.jpg" alt="NIXY MINE" style="width:100%; display:block; border-radius:16px;">
+                <div class="banner-container">
+                    <img src="banner.jpg" alt="NIXY MINE Banner">
                 </div>
+
                 <div class="section-header" id="new-update-section">
                     <div class="section-title-group">
                         <span class="section-icon" style="background-color: #f7f2e5; color: #d1b84f;"><i class="fa-solid fa-star"></i></span>
@@ -561,7 +569,7 @@
                     </div>
                 </div>
                 <div class="category-grid-container" id="game-categories-grid">
-                       </div>
+                     </div>
                 
                 <footer class="footer-container">
                     <div class="footer-links-grid">
@@ -701,10 +709,21 @@
             });
             categoryResultsContainer.scrollIntoView({ behavior: 'smooth' });
         };
+        
+        // --- FUNGSI BARU UNTUK ANIMASI KARTU ---
+        const animateCards = () => {
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('card-anim');
+                }, index * 80); // Muncul satu per satu dengan jeda 80ms
+            });
+        };
 
         populateNewUpdateSection();
         generateCategories('#update-apps-list', '#app-categories-grid');
         generateCategories('#update-games-list', '#game-categories-grid');
+        animateCards(); // Panggil fungsi animasi
         
         const showMainContent = () => {
             mainContent.style.display = 'block';
