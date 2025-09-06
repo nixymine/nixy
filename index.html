@@ -463,6 +463,14 @@
         .card-anim {
             animation: fadeInUp 0.5s ease-out forwards;
         }
+        /* PERBAIKAN: Mencegah celah saat iklan anchor AdSense muncul */
+         body {
+            padding-top: 0 !important;
+        }
+
+        header {
+            top: var(--anchor-ad-top-offset, 0px);
+        }
 
     </style>
     
