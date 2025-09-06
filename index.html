@@ -66,7 +66,6 @@
             --yellow-color: #ffc107; 
             --teal-color: #20c997; 
             --orange-color: #fd7e14; 
-            /* UPGRADE: Animasi lebih halus */
             --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -100,6 +99,11 @@
             padding: 10px 15px;
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 998;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         .header-logo img {
             height: 30px;
@@ -217,7 +221,7 @@
         }
         #recent-searches-list li:hover { color: var(--blue-color); }
 
-        /* STYLE BARU: Banner */
+        /* Banner */
         .banner-container {
             margin-bottom: 25px;
         }
@@ -234,11 +238,10 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding: 0 5px;
+            padding: 0;
         }
         .app-list + .section-header,
-        .category-grid-container + .section-header,
-        .footer-container {
+        .categories-wrapper + .footer-container { /* Jarak antar section besar */
              margin-top: 50px;
         }
         .section-title-group {
@@ -287,7 +290,7 @@
             transition: var(--transition-smooth);
             align-items: flex-start;
             text-decoration: none;
-            opacity: 0; /* Mulai dengan transparan untuk animasi */
+            opacity: 0;
         }
         .app-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px var(--shadow-color); }
         
@@ -355,21 +358,29 @@
             display: none;
         }
 
-        /* Tampilan Kategori */
+        /* --- UPGRADE TAMPILAN KATEGORI --- */
+        .categories-wrapper {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            margin-top: 50px;
+        }
         .category-grid-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
             gap: 10px;
         }
         .category-button {
-            background-color: var(--card-bg);
+            background-color: var(--bg-color);
             color: var(--text-color);
-            padding: 10px;
+            padding: 8px;
             border-radius: 8px;
             text-decoration: none;
-            font-size: 0.9em;
+            font-size: 0.8em;
             font-weight: 500;
-            box-shadow: 0 2px 4px var(--shadow-color);
+            box-shadow: none;
+            border: 1px solid var(--border-color);
             transition: var(--transition-smooth);
             text-align: center;
             white-space: nowrap;
@@ -377,8 +388,10 @@
             text-overflow: ellipsis;
         }
         .category-button:hover {
+            background-color: var(--blue-color);
+            color: white;
+            border-color: var(--blue-color);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px var(--shadow-color);
         }
 
         /* Tampilan Footer */
@@ -436,7 +449,7 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* --- ANIMASI BARU --- */
+        /* Animasi */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -456,9 +469,11 @@
 <body>
 
     <header>
-        <button id="menu-toggle" class="header-btn" aria-label="Buka Menu"><i class="fa-solid fa-bars"></i></button>
-        <div class="header-logo">
-            <a href="#"><img src="https://i.ibb.co/q9xL653/logo-getmodsapk-min-removebg-preview.png" alt="NIXYMINE Logo"></a>
+        <div class="header-left">
+            <button id="menu-toggle" class="header-btn" aria-label="Buka Menu"><i class="fa-solid fa-bars"></i></button>
+            <div class="header-logo">
+                <a href="#"><img src="https://i.ibb.co/q9xL653/logo-getmodsapk-min-removebg-preview.png" alt="NIXYMINE Logo"></a>
+            </div>
         </div>
         <button id="search-toggle" class="header-btn" aria-label="Buka Pencarian"><i class="fa-solid fa-search"></i></button>
     </header>
@@ -507,71 +522,98 @@
 
     <main>
         <div class="container">
-            <div id="main-content">
-                <div class="banner-container">
-                    <img src="banner.jpg" alt="NIXY MINE Banner">
+            <div id="dynamic-content-wrapper">
+                <div id="home-content">
+                    <div class="banner-container">
+                        <img src="https://i.ibb.co/P9M52wD/20250906-130418.jpg" alt="NIXY MINE Banner">
+                    </div>
+                    <div class="section-header" id="new-update-section">
+                        <div class="section-title-group">
+                            <span class="section-icon" style="background-color: #f7f2e5; color: #d1b84f;"><i class="fa-solid fa-star"></i></span>
+                            <h2>New Update</h2>
+                        </div>
+                    </div>
+                    <div class="app-list" id="new-update-list"></div>
+                    <div class="section-header" id="apps-section">
+                        <div class="section-title-group">
+                            <span class="section-icon" style="background-color: #e7e5f7; color: #564fd1;"><i class="fa-solid fa-th-large"></i></span>
+                            <h2>Update Apps</h2>
+                        </div>
+                        <button class="view-all-btn">View All &gt;</button>
+                    </div>
+                    <div class="app-list" id="update-apps-list">
+                        <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/3kXJ81z/monopoly-go.png" alt="App 1"></div><div class="card-content"><div class="card-title-row"><h3>Tiktok v227.383</h3></div><div class="card-details"><span><strong>Version</strong> v227.383</span></div><div class="card-details"><span><strong>Category</strong> Social</span></div></div></a>
+                        <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/v4B87mG/puzzles-survival.png" alt="App 2"></div><div class="card-content"><div class="card-title-row"><h3>Tiktok v208.328</h3></div><div class="card-details"><span><strong>Version</strong> v208.328</span></div><div class="card-details"><span><strong>Category</strong> Social</span></div></div></a>
+                        <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/L9n2K0W/russian-car-driver-uaz-hunter.png" alt="App 3"></div><div class="card-content"><div class="card-title-row"><h3>WhatsApp Messenger</h3></div><div class="card-details"><span><strong>Version</strong> v3.0.1</span></div><div class="card-details"><span><strong>Category</strong> Utility</span></div></div></a>
+                        <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/zX5W84V/max-the-game.png" alt="App 4"></div><div class="card-content"><div class="card-title-row"><h3>Spotify Music</h3></div><div class="card-details"><span><strong>Version</strong> v4.8.2</span></div><div class="card-details"><span><strong>Category</strong> Music</span></div></div></a>
+                        <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/g3gY8fV/sea-of-conquest.png" alt="App 5"></div><div class="card-content"><div class="card-title-row"><h3>NAMA_APPS 5</h3></div><div class="card-details"><span><strong>Version</strong> v5.1.9</span></div><div class="card-details"><span><strong>Category</strong> Tool</span></div></div></a>
+                        <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/3kXJ81z/monopoly-go.png" alt="App 6"></div><div class="card-content"><div class="card-title-row"><h3>NAMA_APPS 6</h3></div><div class="card-details"><span><strong>Version</strong> v6.0.0</span></div><div class="card-details"><span><strong>Category</strong> Finance</span></div></div></a>
+                    </div>
+                    <div class="section-header" id="games-section">
+                        <div class="section-title-group">
+                            <span class="section-icon"><i class="fa-solid fa-gamepad"></i></span>
+                            <h2>Updated Games</h2>
+                        </div>
+                        <button class="view-all-btn">View All &gt;</button>
+                    </div>
+                    <div class="app-list" id="update-games-list">
+                        <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/L9n2K0W/russian-car-driver-uaz-hunter.png" alt="Russian Car Driver UAZ Hunter"></div><div class="card-content"><div class="card-title-row"><h3>Russian Car Driver</h3></div><div class="card-details"><span><strong>Version</strong> v1.2.4</span></div><div class="card-details"><span><strong>Category</strong> Simulation</span></div></div></a>
+                        <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/3kXJ81z/monopoly-go.png" alt="Monopoly GO"></div><div class="card-content"><div class="card-title-row"><h3>MONOPOLY GO!</h3></div><div class="card-details"><span><strong>Version</strong> v1.19.0</span></div><div class="card-details"><span><strong>Category</strong> Casual</span></div></div></a>
+                        <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/v4B87mG/puzzles-survival.png" alt="Puzzles Survival"></div><div class="card-content"><div class="card-title-row"><h3>Puzzles & Survival</h3></div><div class="card-details"><span><strong>Version</strong> v7.0.21</span></div><div class="card-details"><span><strong>Category</strong> Strategy</span></div></div></a>
+                        <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/zX5W84V/max-the_game.png" alt="MAX"></div><div class="card-content"><div class="card-title-row"><h3>MAX The Game</h3></div><div class="card-details"><span><strong>Version</strong> v2.115.1</span></div><div class="card-details"><span><strong>Category</strong> Action</span></div></div></a>
+                        <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/g3gY8fV/sea-of-conquest.png" alt="Sea of Conquest"></div><div class="card-content"><div class="card-title-row"><h3>Sea of Conquest</h3></div><div class="card-details"><span><strong>Version</strong> v1.1.55</span></div><div class="card-details"><span><strong>Category</strong> Strategy</span></div></div></a>
+                        <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/L9n2K0W/russian-car-driver-uaz-hunter.png" alt="Game 6"></div><div class="card-content"><div class="card-title-row"><h3>NAMA_GAMES 6</h3></div><div class="card-details"><span><strong>Version</strong> v10.0.0</span></div><div class="card-details"><span><strong>Category</strong> Racing</span></div></div></a>
+                    </div>
                 </div>
 
-                <div class="section-header" id="new-update-section">
-                    <div class="section-title-group">
-                        <span class="section-icon" style="background-color: #f7f2e5; color: #d1b84f;"><i class="fa-solid fa-star"></i></span>
-                        <h2>New Update</h2>
+                <div id="search-results-container" style="display: none;">
+                    <div class="section-header">
+                        <div class="section-title-group">
+                             <span class="section-icon" style="background-color: #e5f7f0; color: #4fd18e;"><i class="fa-solid fa-search"></i></span>
+                            <h2>Hasil Pencarian</h2>
+                        </div>
                     </div>
+                    <div class="app-list results-list" id="search-results-list"></div>
+                    <p id="no-results-message" style="display: none; text-align: center; margin-top: 20px; color: var(--text-color-light);">Tidak ada hasil yang ditemukan.</p>
                 </div>
-                <div class="app-list" id="new-update-list">
+    
+                <div id="category-results-container" style="display: none;">
+                    <div class="section-header">
+                        <div class="section-title-group">
+                             <span class="section-icon" style="background-color: #e5f0f7; color: #4f95d1;"><i class="fa-solid fa-tags"></i></span>
+                            <h2 id="category-results-title">Result Category</h2>
+                        </div>
                     </div>
+                    <div class="app-list results-list" id="category-results-list"></div>
+                </div>
+            </div>
 
-                <div class="section-header" id="apps-section">
-                    <div class="section-title-group">
-                        <span class="section-icon" style="background-color: #e7e5f7; color: #564fd1;"><i class="fa-solid fa-th-large"></i></span>
-                        <h2>Update Apps</h2>
+            <div id="common-sections">
+                <div class="categories-wrapper">
+                    <div class="section-header" id="apps-categories-section">
+                        <div class="section-title-group">
+                             <span class="section-icon" style="background-color: #e7e5f7; color: #564fd1;"><i class="fa-solid fa-folder-open"></i></span>
+                            <h2>APPS - Category</h2>
+                        </div>
                     </div>
-                    <button class="view-all-btn">View All &gt;</button>
-                </div>
-                <div class="app-list" id="update-apps-list">
-                    <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/3kXJ81z/monopoly-go.png" alt="App 1"></div><div class="card-content"><div class="card-title-row"><h3>Tiktok v227.383</h3></div><div class="card-details"><span><strong>Versions</strong> v227.383</span></div><div class="card-details"><span><strong>Category</strong> Social</span></div></div></a>
-                    <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/v4B87mG/puzzles-survival.png" alt="App 2"></div><div class="card-content"><div class="card-title-row"><h3>Tiktok v208.328</h3></div><div class="card-details"><span><strong>Versions</strong> v208.328</span></div><div class="card-details"><span><strong>Category</strong> Social</span></div></div></a>
-                    <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/L9n2K0W/russian-car-driver-uaz-hunter.png" alt="App 3"></div><div class="card-content"><div class="card-title-row"><h3>WhatsApp Messenger</h3></div><div class="card-details"><span><strong>Versions</strong> v3.0.1</span></div><div class="card-details"><span><strong>Category</strong> Utility</span></div></div></a>
-                    <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/zX5W84V/max-the-game.png" alt="App 4"></div><div class="card-content"><div class="card-title-row"><h3>Spotify Music</h3></div><div class="card-details"><span><strong>Versions</strong> v4.8.2</span></div><div class="card-details"><span><strong>Category</strong> Music</span></div></div></a>
-                    <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/g3gY8fV/sea-of-conquest.png" alt="App 5"></div><div class="card-content"><div class="card-title-row"><h3>NAMA_APPS 5</h3></div><div class="card-details"><span><strong>Versions</strong> v5.1.9</span></div><div class="card-details"><span><strong>Category</strong> Tool</span></div></div></a>
-                    <a href="#" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://i.ibb.co/3kXJ81z/monopoly-go.png" alt="App 6"></div><div class="card-content"><div class="card-title-row"><h3>NAMA_APPS 6</h3></div><div class="card-details"><span><strong>Versions</strong> v6.0.0</span></div><div class="card-details"><span><strong>Category</strong> Finance</span></div></div></a>
-                </div>
-                
-                <div class="section-header" id="games-section">
-                    <div class="section-title-group">
-                        <span class="section-icon"><i class="fa-solid fa-gamepad"></i></span>
-                        <h2>Updated Games</h2>
-                    </div>
-                    <button class="view-all-btn">View All &gt;</button>
-                </div>
-                <div class="app-list" id="update-games-list">
-                    <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/L9n2K0W/russian-car-driver-uaz-hunter.png" alt="Russian Car Driver UAZ Hunter"></div><div class="card-content"><div class="card-title-row"><h3>Russian Car Driver</h3></div><div class="card-details"><span><strong>Versions</strong> v1.2.4</span></div><div class="card-details"><span><strong>Category</strong> Simulation</span></div></div></a>
-                    <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/3kXJ81z/monopoly-go.png" alt="Monopoly GO"></div><div class="card-content"><div class="card-title-row"><h3>MONOPOLY GO!</h3></div><div class="card-details"><span><strong>Versions</strong> v1.19.0</span></div><div class="card-details"><span><strong>Category</strong> Casual</span></div></div></a>
-                    <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/v4B87mG/puzzles-survival.png" alt="Puzzles Survival"></div><div class="card-content"><div class="card-title-row"><h3>Puzzles & Survival</h3></div><div class="card-details"><span><strong>Versions</strong> v7.0.21</span></div><div class="card-details"><span><strong>Category</strong> Strategy</span></div></div></a>
-                    <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/zX5W84V/max-the_game.png" alt="MAX"></div><div class="card-content"><div class="card-title-row"><h3>MAX The Game</h3></div><div class="card-details"><span><strong>Versions</strong> v2.115.1</span></div><div class="card-details"><span><strong>Category</strong> Action</span></div></div></a>
-                    <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/g3gY8fV/sea-of-conquest.png" alt="Sea of Conquest"></div><div class="card-content"><div class="card-title-row"><h3>Sea of Conquest</h3></div><div class="card-details"><span><strong>Versions</strong> v1.1.55</span></div><div class="card-details"><span><strong>Category</strong> Strategy</span></div></div></a>
-                    <a href="#" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="https://i.ibb.co/L9n2K0W/russian-car-driver-uaz-hunter.png" alt="Game 6"></div><div class="card-content"><div class="card-title-row"><h3>NAMA_GAMES 6</h3></div><div class="card-details"><span><strong>Versions</strong> v10.0.0</span></div><div class="card-details"><span><strong>Category</strong> Racing</span></div></div></a>
-                </div>
+                    <div class="category-grid-container" id="app-categories-grid"></div>
 
-                <div class="section-header" id="apps-categories-section">
-                    <div class="section-title-group">
-                         <span class="section-icon" style="background-color: #e7e5f7; color: #564fd1;"><i class="fa-solid fa-folder-open"></i></span>
-                        <h2>Apps - Categories</h2>
+                    <div class="section-header" id="games-categories-section" style="margin-top: 30px;">
+                        <div class="section-title-group">
+                            <span class="section-icon"><i class="fa-solid fa-folder-open"></i></span>
+                            <h2>GAMES - Category</h2>
+                        </div>
                     </div>
+                    <div class="category-grid-container" id="game-categories-grid"></div>
                 </div>
-                <div class="category-grid-container" id="app-categories-grid">
-                    </div>
-
-                <div class="section-header" id="games-categories-section">
-                    <div class="section-title-group">
-                        <span class="section-icon"><i class="fa-solid fa-folder-open"></i></span>
-                        <h2>Games - Categories</h2>
-                    </div>
-                </div>
-                <div class="category-grid-container" id="game-categories-grid">
-                     </div>
                 
                 <footer class="footer-container">
+                	<div class="section-header">
+                   <div class="section-title-group">
+                   <span class="section-icon" style="background-color: #e9ecef; color: #6c757d;"><i class="fa fa-question-circle"></i></span>
+                    <h2>NIXY MINE - About Us</h2>
+                    </div>
+                    </div>
                     <div class="footer-links-grid">
                         <a href="#" class="footer-link">Privacy</a>
                         <a href="#" class="footer-link">About</a>
@@ -594,37 +636,13 @@
                     </div>
                 </footer>
             </div>
-
-            <div id="search-results-container" style="display: none;">
-                <div class="section-header">
-                    <div class="section-title-group">
-                         <span class="section-icon" style="background-color: #e5f7f0; color: #4fd18e;"><i class="fa-solid fa-search"></i></span>
-                        <h2>Hasil Pencarian</h2>
-                    </div>
-                </div>
-                <div class="app-list results-list" id="search-results-list">
-                    </div>
-                <p id="no-results-message" style="display: none; text-align: center; margin-top: 20px; color: var(--text-color-light);">Tidak ada hasil yang ditemukan.</p>
-            </div>
-
-            <div id="category-results-container" style="display: none;">
-                <div class="section-header">
-                    <div class="section-title-group">
-                         <span class="section-icon" style="background-color: #e5f0f7; color: #4f95d1;"><i class="fa-solid fa-tags"></i></span>
-                        <h2 id="category-results-title">Hasil Kategori</h2>
-                    </div>
-                </div>
-                <div class="app-list results-list" id="category-results-list">
-                    </div>
-            </div>
-
         </div>
     </main>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- Elemen UI ---
-        const mainContent = document.getElementById('main-content');
+        const homeContent = document.getElementById('home-content');
         const searchResultsContainer = document.getElementById('search-results-container');
         const categoryResultsContainer = document.getElementById('category-results-container');
         const searchResultsList = document.getElementById('search-results-list');
@@ -684,10 +702,10 @@
         };
 
         const showCategoryResults = (categoryName) => {
-            mainContent.style.display = 'none';
+            homeContent.style.display = 'none';
             searchResultsContainer.style.display = 'none';
             categoryResultsContainer.style.display = 'block';
-            categoryResultsTitle.textContent = `Kategori: ${categoryName}`;
+            categoryResultsTitle.textContent = `Result: ${categoryName}`;
             categoryResultsList.innerHTML = '';
 
             const matchingItems = [];
@@ -707,26 +725,25 @@
                     addedBaseNames.add(baseName);
                 }
             });
-            categoryResultsContainer.scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         
-        // --- FUNGSI BARU UNTUK ANIMASI KARTU ---
         const animateCards = () => {
-            const cards = document.querySelectorAll('.app-card');
+            const cards = document.querySelectorAll('#home-content .app-card');
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     card.classList.add('card-anim');
-                }, index * 80); // Muncul satu per satu dengan jeda 80ms
+                }, index * 80);
             });
         };
 
         populateNewUpdateSection();
         generateCategories('#update-apps-list', '#app-categories-grid');
         generateCategories('#update-games-list', '#game-categories-grid');
-        animateCards(); // Panggil fungsi animasi
+        animateCards();
         
-        const showMainContent = () => {
-            mainContent.style.display = 'block';
+        const showHomeContent = () => {
+            homeContent.style.display = 'block';
             searchResultsContainer.style.display = 'none';
             categoryResultsContainer.style.display = 'none';
         };
@@ -759,7 +776,7 @@
         const executeSearch = (query) => {
             const searchTerm = query.toLowerCase().trim();
             if (!searchTerm) {
-                showMainContent();
+                showHomeContent();
                 return;
             }
             searchResultsList.innerHTML = '';
@@ -785,12 +802,12 @@
             });
 
             noResultsMessage.style.display = searchResultsList.children.length === 0 ? 'block' : 'none';
-            mainContent.style.display = 'none';
+            homeContent.style.display = 'none';
             categoryResultsContainer.style.display = 'none';
             searchResultsContainer.style.display = 'block';
             if(searchOverlay.classList.contains('active')) toggleOverlay(searchOverlay, false);
             if(menuOverlay.classList.contains('active')) toggleOverlay(menuOverlay, false);
-            searchResultsContainer.scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
         const handleSearchEvent = (event) => {
@@ -812,7 +829,7 @@
 
         headerLogoLink.addEventListener('click', (e) => {
             e.preventDefault();
-            showMainContent();
+            showHomeContent();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
