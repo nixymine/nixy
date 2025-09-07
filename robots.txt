@@ -1,0 +1,23 @@
+# Izinkan robot utama Google untuk merayapi seluruh situs.
+User-agent: Googlebot
+Allow: /
+
+# Blokir beberapa bot AI dan scraper yang umum.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+# Aturan umum untuk semua bot lain (izinkan semua).
+User-agent: *
+Allow: /
+
+# Menunjukkan lokasi file sitemap Anda kepada semua bot.
+Sitemap: https://nixymine.my.id/sitemap.xml
