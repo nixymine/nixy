@@ -238,6 +238,7 @@
             align-items: center;
             margin-bottom: 20px;
             padding: 0;
+            scroll-margin-top: 70px; 
         }
         .app-list + .section-header,
         .categories-wrapper + .footer-container { /* Jarak antar section besar */
@@ -940,8 +941,29 @@
         });
 
         document.querySelectorAll('#menu-overlay a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', () => toggleOverlay(menuOverlay, false));
-        });
+    anchor.addEventListener('click', () => {
+        // 1. Tetap tutup menu overlay (kode lama)
+        toggleOverlay(menuOverlay, false);
+
+        // 2. Ambil ID target dari link (misal: "#games-section")
+        const targetId = anchor.getAttribute('href');
+        const targetSectionHeader = document.querySelector(targetId);
+
+        // 3. Jika elemen targetnya ada di halaman...
+        if (targetSectionHeader) {
+            // ...cari tombol "View All" di dalamnya
+            const viewAllButton = targetSectionHeader.querySelector('.view-all-btn');
+
+            // Jika tombolnya ada, klik secara otomatis
+            if (viewAllButton) {
+                // Diberi sedikit jeda (50 milidetik) agar animasi scroll selesai dulu
+                setTimeout(() => {
+                    viewAllButton.click();
+                }, 50);
+            }
+        }
+    });
+    });
     });
     </script>
 </body>
