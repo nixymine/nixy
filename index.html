@@ -653,7 +653,7 @@
         </div>
     </main>
 
-    <script>
+   <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- Elemen UI ---
         const homeContent = document.getElementById('home-content');
@@ -733,7 +733,7 @@
             const addedBaseNames = new Set();
             matchingItems.forEach(item => {
                 const title = item.querySelector('h3').textContent;
-                const baseName = title.replace(/\s*v[\d\.]+.*$/i, '').trim();
+                const baseName = title.replace(/\s*v?[\d\.]+.*$/i, '').trim();
                 if (!addedBaseNames.has(baseName)) {
                     categoryResultsList.appendChild(item.cloneNode(true));
                     addedBaseNames.add(baseName);
@@ -742,6 +742,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         
+        // --- FUNGSI INI TELAH DI-UPGRADE ---
         const showSectionResults = (title, sourceListSelector) => {
             homeContent.style.display = 'none';
             searchResultsContainer.style.display = 'none';
@@ -750,9 +751,22 @@
             categoryResultsList.innerHTML = '';
 
             const sourceItems = document.querySelectorAll(`${sourceListSelector} .app-card`);
+            
+            // --- LOGIKA BARU UNTUK HAPUS DUPLIKAT ---
+            const addedBaseNames = new Set();
             sourceItems.forEach(item => {
-                categoryResultsList.appendChild(item.cloneNode(true));
+                const titleElement = item.querySelector('h3');
+                if (titleElement) {
+                    const title = titleElement.textContent;
+                    const baseName = title.replace(/\s*v?[\d\.]+.*$/i, '').trim();
+                    
+                    if (!addedBaseNames.has(baseName)) {
+                        categoryResultsList.appendChild(item.cloneNode(true));
+                        addedBaseNames.add(baseName);
+                    }
+                }
             });
+            // --- AKHIR DARI LOGIKA BARU ---
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -766,21 +780,20 @@
             });
         };
 
-        // --- INI BAGIAN UTAMA LOGIKA ROUTING ---
+        // Logika Routing (Tidak berubah, tetap sama)
         generateCategories('#update-apps-list', '#app-categories-grid');
         generateCategories('#update-games-list', '#game-categories-grid');
         
         const path = window.location.pathname;
 
         if (path === '/games' || path === '/games/') {
-            showSectionResults('Updated Games', '#update-games-list');
+            showSectionResults('All Games', '#update-games-list'); // Judul diubah menjadi "All Games"
         } else if (path === '/apps' || path === '/apps/') {
-            showSectionResults('Updated Apps', '#update-apps-list');
+            showSectionResults('All Apps', '#update-apps-list'); // Judul diubah menjadi "All Apps"
         } else {
             populateNewUpdateSection();
             animateCards();
         }
-        // --- AKHIR DARI BAGIAN LOGIKA ROUTING ---
         
         const showHomeContent = () => {
             homeContent.style.display = 'block';
@@ -834,7 +847,7 @@
             const addedBaseNames = new Set();
             matchingItems.forEach(item => {
                 const title = item.querySelector('h3').textContent;
-                const baseName = title.replace(/\s*v[\d\.]+.*$/i, '').trim();
+                const baseName = title.replace(/\s*v?[\d\.]+.*$/i, '').trim();
                 if (!addedBaseNames.has(baseName)) {
                     searchResultsList.appendChild(item.cloneNode(true));
                     addedBaseNames.add(baseName);
