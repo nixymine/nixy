@@ -851,6 +851,29 @@
             anchor.addEventListener('click', () => toggleOverlay(menuOverlay, false));
         });
     });
+
+        // --- FUNGSI BARU UNTUK HANDLE URL ---
+const handleUrlRoutes = () => {
+    const path = window.location.pathname; // Mendapatkan path dari URL, misal: "/games"
+
+    if (path.includes('/games')) {
+        const gamesSection = document.getElementById('games-section');
+        if (gamesSection) {
+            // Sembunyikan konten lain jika perlu dan tampilkan hanya game
+            // Untuk sekarang, kita hanya akan scroll
+            gamesSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    } else if (path.includes('/apps')) {
+        const appsSection = document.getElementById('apps-section');
+        if (appsSection) {
+            appsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+    // Tambahkan else if lain jika ada halaman lain seperti /blog
+};
+
+// Panggil fungsi ini saat halaman dimuat
+handleUrlRoutes();
     </script>
 
 
