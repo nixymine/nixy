@@ -640,6 +640,15 @@
                         </div>
                     </div>
                     <div class="app-list results-list" id="search-results-list"></div>
+
+                    <div class="section-header" id="blog-search-header" style="display: none; margin-top: 40px;">
+                        <div class="section-title-group">
+                            <span class="section-icon" style="background-color: #e5f7f0; color: #4fd18e;"><i class="fa-solid fa-file-alt"></i></span>
+                            <h2>Hasil Artikel</h2>
+                        </div>
+                    </div>
+                    <div class="blog-list app-list results-list" id="blog-search-results-list"></div>
+                    
                     <p id="no-results-message" style="display: none; text-align: center; margin-top: 20px; color: var(--text-color-light);">Tidak ada hasil yang ditemukan.</p>
                 </div>
     
@@ -728,6 +737,10 @@
         const allViewAllButtons = document.querySelectorAll('.view-all-btn');
         const headerLogoLink = document.querySelector('.header-logo a');
         
+        // --- Elemen UI Baru untuk Pencarian Artikel ---
+        const blogSearchResultsList = document.getElementById('blog-search-results-list');
+        const blogSearchHeader = document.getElementById('blog-search-header');
+        
         const populateNewUpdateSection = () => {
             const newUpdateList = document.getElementById('new-update-list');
             const appsList = document.getElementById('update-apps-list');
@@ -740,6 +753,7 @@
         };
         
         const allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
+        const allBlogItems = document.querySelectorAll('#blog-list .blog-post-item');
 
         const generateCategories = (sourceListSelector, targetGridSelector) => {
             const sourceList = document.querySelector(sourceListSelector);
@@ -845,29 +859,55 @@
                 showHomeContent();
                 return;
             }
+
+            // 1. Kosongkan hasil pencarian sebelumnya
             searchResultsList.innerHTML = '';
-            
-            const matchingItems = [];
+            blogSearchResultsList.innerHTML = '';
+            blogSearchHeader.style.display = 'none';
+
+            // 2. Cari di Aplikasi dan Game
+            const matchingAppsGames = [];
             allItems.forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 const categoryElement = card.querySelectorAll('.card-details')[1];
                 const categoryText = categoryElement ? categoryElement.textContent.toLowerCase() : '';
                 if (title.includes(searchTerm) || categoryText.includes(searchTerm)) {
-                    matchingItems.push(card);
+                    matchingAppsGames.push(card);
                 }
             });
-
-            const addedBaseNames = new Set();
-            matchingItems.forEach(item => {
+            const addedAppGameBaseNames = new Set();
+            matchingAppsGames.forEach(item => {
                 const title = item.querySelector('h3').textContent;
                 const baseName = title.replace(/\s*v[\d\.]+.*$/i, '').trim();
-                if (!addedBaseNames.has(baseName)) {
+                if (!addedAppGameBaseNames.has(baseName)) {
                     searchResultsList.appendChild(item.cloneNode(true));
-                    addedBaseNames.add(baseName);
+                    addedAppGameBaseNames.add(baseName);
                 }
             });
 
-            noResultsMessage.style.display = searchResultsList.children.length === 0 ? 'block' : 'none';
+            // 3. Cari di Artikel Blog
+            const matchingBlogItems = [];
+            allBlogItems.forEach(item => {
+                const title = item.textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    matchingBlogItems.push(item);
+                }
+            });
+            matchingBlogItems.forEach(item => {
+                blogSearchResultsList.appendChild(item.cloneNode(true));
+            });
+
+            // 4. Atur tampilan UI berdasarkan hasil
+            const appResultsFound = searchResultsList.children.length > 0;
+            const blogResultsFound = blogSearchResultsList.children.length > 0;
+
+            if (blogResultsFound) {
+                blogSearchHeader.style.display = 'flex'; // Tampilkan header jika ada hasil artikel
+            }
+
+            noResultsMessage.style.display = (!appResultsFound && !blogResultsFound) ? 'block' : 'none';
+
+            // 5. Pindah ke halaman hasil pencarian
             homeContent.style.display = 'none';
             categoryResultsContainer.style.display = 'none';
             searchResultsContainer.style.display = 'block';
