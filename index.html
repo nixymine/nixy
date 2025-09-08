@@ -675,6 +675,8 @@
         const allViewAllButtons = document.querySelectorAll('.view-all-btn');
         const headerLogoLink = document.querySelector('.header-logo a');
         
+        let allItems = []; // Biarkan kosong dulu, akan diisi nanti
+
         const populateNewUpdateSection = () => {
             const newUpdateList = document.getElementById('new-update-list');
             const appsList = document.getElementById('update-apps-list');
@@ -686,12 +688,14 @@
             latestGames.forEach(game => newUpdateList.appendChild(game.cloneNode(true)));
         };
         
-        const allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
-
         const generateCategories = (sourceListSelector, targetGridSelector) => {
             const sourceList = document.querySelector(sourceListSelector);
             const targetGrid = document.querySelector(targetGridSelector);
             if (!sourceList || !targetGrid) return;
+            
+            // Perbarui allItems setiap kali generate kategori
+            allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
+
             const categories = new Set();
             sourceList.querySelectorAll('.app-card').forEach(card => {
                 const categoryDetail = card.querySelectorAll('.card-details')[1];
@@ -720,6 +724,9 @@
             categoryResultsContainer.style.display = 'block';
             categoryResultsTitle.textContent = `Result: ${categoryName}`;
             categoryResultsList.innerHTML = '';
+            
+            // Perbarui allItems sebelum melakukan filter
+            allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
 
             const matchingItems = [];
             allItems.forEach(card => {
@@ -741,7 +748,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         
-        // --- FUNGSI INI TELAH DI-UPGRADE ---
         const showSectionResults = (title, sourceListSelector) => {
             homeContent.style.display = 'none';
             searchResultsContainer.style.display = 'none';
@@ -751,7 +757,6 @@
 
             const sourceItems = document.querySelectorAll(`${sourceListSelector} .app-card`);
             
-            // --- LOGIKA BARU UNTUK HAPUS DUPLIKAT ---
             const addedBaseNames = new Set();
             sourceItems.forEach(item => {
                 const titleElement = item.querySelector('h3');
@@ -765,7 +770,6 @@
                     }
                 }
             });
-            // --- AKHIR DARI LOGIKA BARU ---
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -779,25 +783,52 @@
             });
         };
 
-        // Logika Routing (Tidak berubah, tetap sama)
-        generateCategories('#update-apps-list', '#app-categories-grid');
-        generateCategories('#update-games-list', '#game-categories-grid');
-        
-        const path = window.location.pathname;
+        const runRouting = () => {
+             // Generate kategori setelah konten siap
+            generateCategories('#update-apps-list', '#app-categories-grid');
+            generateCategories('#update-games-list', '#game-categories-grid');
 
-        if (path === '/games' || path === '/games/') {
-            showSectionResults('All Games', '#update-games-list'); // Judul diubah menjadi "All Games"
-        } else if (path === '/apps' || path === '/apps/') {
-            showSectionResults('All Apps', '#update-apps-list'); // Judul diubah menjadi "All Apps"
+            const path = window.location.pathname;
+
+            if (path === '/games' || path === '/games/') {
+                showSectionResults('All Games', '#update-games-list');
+            } else if (path === '/apps' || path === '/apps/') {
+                showSectionResults('All Apps', '#update-apps-list');
+            } else {
+                populateNewUpdateSection();
+                animateCards();
+            }
+        };
+
+        const waitForContent = () => {
+            const appList = document.getElementById('update-apps-list');
+            // Cek jika jumlah aplikasi lebih dari 1 (lebih dari placeholder)
+            if (appList && appList.children.length > 1) {
+                runRouting();
+            } else {
+                 // Jika belum, coba cek lagi dalam 100ms
+                setTimeout(waitForContent, 100);
+            }
+        };
+
+        // --- INI BAGIAN UTAMA YANG DIUBAH ---
+        const path = window.location.pathname;
+        if (path.startsWith('/apps') || path.startsWith('/games')) {
+            // Jika di halaman apps atau games, tunggu kontennya
+            waitForContent();
         } else {
-            populateNewUpdateSection();
-            animateCards();
+            // Jika di halaman utama, jalankan langsung
+            // Kita juga tunggu sebentar untuk memastikan konten dinamis home sempat dimuat
+             setTimeout(() => {
+                generateCategories('#update-apps-list', '#app-categories-grid');
+                generateCategories('#update-games-list', '#game-categories-grid');
+                populateNewUpdateSection();
+                animateCards();
+            }, 100);
         }
         
         const showHomeContent = () => {
-            homeContent.style.display = 'block';
-            searchResultsContainer.style.display = 'none';
-            categoryResultsContainer.style.display = 'none';
+            window.location.href = '/'; // Arahkan ke home
         };
         
         const toggleOverlay = (overlay, isActive) => {
@@ -832,6 +863,9 @@
                 return;
             }
             searchResultsList.innerHTML = '';
+            
+            // Perbarui allItems tepat sebelum melakukan pencarian
+            allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
             
             const matchingItems = [];
             allItems.forEach(card => {
@@ -879,10 +913,17 @@
             });
         });
 
+        // Event listener untuk logo dan tombol Home di menu
         headerLogoLink.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = '/';
+            showHomeContent();
         });
+        document.querySelector('.menu-grid-item.home').addEventListener('click', (e) => {
+             e.preventDefault();
+             toggleOverlay(menuOverlay, false);
+             showHomeContent();
+        });
+
 
         document.querySelectorAll('#menu-overlay a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', () => toggleOverlay(menuOverlay, false));
