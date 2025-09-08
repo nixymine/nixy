@@ -1,0 +1,31 @@
+# Nama workflow
+name: Backup Repo NIXY ke Telegram (10x Sehari)
+
+# Pemicu workflow
+on:
+  schedule:
+    # Menjalankan 10x sehari, kira-kira setiap 2-3 jam
+    # Jam dalam UTC: 0, 2, 5, 7, 10, 12, 15, 17, 20, 22
+    - cron: '0 0,2,5,7,10,12,15,17,20,22 * * *'
+  workflow_dispatch:
+    # Tombol untuk menjalankan manual
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      # Langkah 1: Checkout kode repositori
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Langkah 2: Kirim file zip ke Telegram
+      - name: Kirim Backup ke Telegram
+        run: |
+          # Deskripsi diatur untuk repo "nixy"
+          CAPTION="BackUp | nixy | $(date +'%d-%m-%Y | %H.%M WIB')"
+
+          # Mengirim file zip dari repositori ini
+          curl -s -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+               -F "document=https://github.com/${{ github.repository }}/archive/refs/heads/main.zip" \
+               -F "caption=${CAPTION}" \
+               https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
