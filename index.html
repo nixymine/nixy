@@ -356,6 +356,29 @@
         .results-list .app-card:nth-child(n + 101) {
             display: none;
         }
+        
+        /* --- Gaya Blog --- */
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .blog-post-item {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1em;
+            transition: var(--transition-smooth);
+        }
+        .blog-post-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px var(--shadow-color);
+            color: var(--blue-color);
+        }
 
         /* --- UPGRADE TAMPILAN KATEGORI --- */
         .categories-wrapper {
@@ -576,8 +599,22 @@
                     </div>
                     <div class="app-list" id="update-games-list">
                         <a href="NIXY_LINK_GAMES" class="app-card" data-title="GAMES"><div class="card-image-container"><img src="NIXY_URL_GAMBAR_GAMES" alt="NIXY MINE"></div><div class="card-content"><div class="card-title-row"><h3>NIXY_NAMA_GAME</h3></div><div class="card-details"><span><strong><i class="fa-solid fa-code-branch"></i> Version</strong> NIXY_VERSI_GAMES</span></div><div class="card-details"><span><strong><i class="fa-solid fa-folder-open"></i> Category</strong> NIXY_CATEGORY_GAMES</span></div></div></a>
-                 </div>
-                </div>
+                    </div>
+
+                    <div class="section-header" id="blog-section" style="margin-top: 50px;">
+                        <div class="section-title-group">
+                            <span class="section-icon" style="background-color: #e5f7f0; color: #4fd18e;"><i class="fa-solid fa-file-alt"></i></span>
+                            <h2>Artikel Blog</h2>
+                        </div>
+                    </div>
+                    <div class="blog-list" id="blog-list">
+                        <a href="#" class="blog-post-item">Cara Mengatasi Lag Saat Bermain Game di Android</a>
+                        <a href="#" class="blog-post-item">10 Aplikasi Edit Video Terbaik untuk Konten Kreator</a>
+                        <a href="#" class="blog-post-item">Tips Keamanan: Cara Menghindari Malware dari Aplikasi APK</a>
+                        <a href="#" class="blog-post-item">Review Game Terbaru: Apakah Layak untuk Diunduh?</a>
+                        <a href="#" class="blog-post-item">Aplikasi Produktivitas yang Wajib Kamu Punya di 2025</a>
+                    </div>
+                    </div>
 
                 <div id="search-results-container" style="display: none;">
                     <div class="section-header">
@@ -652,7 +689,7 @@
         </div>
     </main>
 
-   <script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- Elemen UI ---
         const homeContent = document.getElementById('home-content');
@@ -675,8 +712,6 @@
         const allViewAllButtons = document.querySelectorAll('.view-all-btn');
         const headerLogoLink = document.querySelector('.header-logo a');
         
-        let allItems = []; // Biarkan kosong dulu, akan diisi nanti
-
         const populateNewUpdateSection = () => {
             const newUpdateList = document.getElementById('new-update-list');
             const appsList = document.getElementById('update-apps-list');
@@ -688,14 +723,12 @@
             latestGames.forEach(game => newUpdateList.appendChild(game.cloneNode(true)));
         };
         
+        const allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
+
         const generateCategories = (sourceListSelector, targetGridSelector) => {
             const sourceList = document.querySelector(sourceListSelector);
             const targetGrid = document.querySelector(targetGridSelector);
             if (!sourceList || !targetGrid) return;
-            
-            // Perbarui allItems setiap kali generate kategori
-            allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
-
             const categories = new Set();
             sourceList.querySelectorAll('.app-card').forEach(card => {
                 const categoryDetail = card.querySelectorAll('.card-details')[1];
@@ -724,9 +757,6 @@
             categoryResultsContainer.style.display = 'block';
             categoryResultsTitle.textContent = `Result: ${categoryName}`;
             categoryResultsList.innerHTML = '';
-            
-            // Perbarui allItems sebelum melakukan filter
-            allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
 
             const matchingItems = [];
             allItems.forEach(card => {
@@ -739,38 +769,12 @@
             const addedBaseNames = new Set();
             matchingItems.forEach(item => {
                 const title = item.querySelector('h3').textContent;
-                const baseName = title.replace(/\s*v?[\d\.]+.*$/i, '').trim();
+                const baseName = title.replace(/\s*v[\d\.]+.*$/i, '').trim();
                 if (!addedBaseNames.has(baseName)) {
                     categoryResultsList.appendChild(item.cloneNode(true));
                     addedBaseNames.add(baseName);
                 }
             });
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-        
-        const showSectionResults = (title, sourceListSelector) => {
-            homeContent.style.display = 'none';
-            searchResultsContainer.style.display = 'none';
-            categoryResultsContainer.style.display = 'block';
-            categoryResultsTitle.textContent = title;
-            categoryResultsList.innerHTML = '';
-
-            const sourceItems = document.querySelectorAll(`${sourceListSelector} .app-card`);
-            
-            const addedBaseNames = new Set();
-            sourceItems.forEach(item => {
-                const titleElement = item.querySelector('h3');
-                if (titleElement) {
-                    const title = titleElement.textContent;
-                    const baseName = title.replace(/\s*v?[\d\.]+.*$/i, '').trim();
-                    
-                    if (!addedBaseNames.has(baseName)) {
-                        categoryResultsList.appendChild(item.cloneNode(true));
-                        addedBaseNames.add(baseName);
-                    }
-                }
-            });
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         
@@ -783,52 +787,15 @@
             });
         };
 
-        const runRouting = () => {
-             // Generate kategori setelah konten siap
-            generateCategories('#update-apps-list', '#app-categories-grid');
-            generateCategories('#update-games-list', '#game-categories-grid');
-
-            const path = window.location.pathname;
-
-            if (path === '/games' || path === '/games/') {
-                showSectionResults('All Games', '#update-games-list');
-            } else if (path === '/apps' || path === '/apps/') {
-                showSectionResults('All Apps', '#update-apps-list');
-            } else {
-                populateNewUpdateSection();
-                animateCards();
-            }
-        };
-
-        const waitForContent = () => {
-            const appList = document.getElementById('update-apps-list');
-            // Cek jika jumlah aplikasi lebih dari 1 (lebih dari placeholder)
-            if (appList && appList.children.length > 1) {
-                runRouting();
-            } else {
-                 // Jika belum, coba cek lagi dalam 100ms
-                setTimeout(waitForContent, 100);
-            }
-        };
-
-        // --- INI BAGIAN UTAMA YANG DIUBAH ---
-        const path = window.location.pathname;
-        if (path.startsWith('/apps') || path.startsWith('/games')) {
-            // Jika di halaman apps atau games, tunggu kontennya
-            waitForContent();
-        } else {
-            // Jika di halaman utama, jalankan langsung
-            // Kita juga tunggu sebentar untuk memastikan konten dinamis home sempat dimuat
-             setTimeout(() => {
-                generateCategories('#update-apps-list', '#app-categories-grid');
-                generateCategories('#update-games-list', '#game-categories-grid');
-                populateNewUpdateSection();
-                animateCards();
-            }, 100);
-        }
+        populateNewUpdateSection();
+        generateCategories('#update-apps-list', '#app-categories-grid');
+        generateCategories('#update-games-list', '#game-categories-grid');
+        animateCards();
         
         const showHomeContent = () => {
-            window.location.href = '/'; // Arahkan ke home
+            homeContent.style.display = 'block';
+            searchResultsContainer.style.display = 'none';
+            categoryResultsContainer.style.display = 'none';
         };
         
         const toggleOverlay = (overlay, isActive) => {
@@ -864,9 +831,6 @@
             }
             searchResultsList.innerHTML = '';
             
-            // Perbarui allItems tepat sebelum melakukan pencarian
-            allItems = document.querySelectorAll('#update-apps-list .app-card, #update-games-list .app-card');
-            
             const matchingItems = [];
             allItems.forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
@@ -880,7 +844,7 @@
             const addedBaseNames = new Set();
             matchingItems.forEach(item => {
                 const title = item.querySelector('h3').textContent;
-                const baseName = title.replace(/\s*v?[\d\.]+.*$/i, '').trim();
+                const baseName = title.replace(/\s*v[\d\.]+.*$/i, '').trim();
                 if (!addedBaseNames.has(baseName)) {
                     searchResultsList.appendChild(item.cloneNode(true));
                     addedBaseNames.add(baseName);
@@ -913,22 +877,16 @@
             });
         });
 
-        // Event listener untuk logo dan tombol Home di menu
         headerLogoLink.addEventListener('click', (e) => {
             e.preventDefault();
             showHomeContent();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-        document.querySelector('.menu-grid-item.home').addEventListener('click', (e) => {
-             e.preventDefault();
-             toggleOverlay(menuOverlay, false);
-             showHomeContent();
-        });
-
 
         document.querySelectorAll('#menu-overlay a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', () => toggleOverlay(menuOverlay, false));
         });
     });
-</script>
+    </script>
 </body>
 </html>
