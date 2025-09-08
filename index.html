@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="id"><head>
+<html lang="id">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIXYMINE - Download &amp; Enjoy</title>
+    <title>NIXYMINE - Download & Enjoy</title>
     
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     
@@ -12,12 +13,12 @@
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nixymine.my.id/">
-    <meta property="og:title" content="NIXYMINE - Download &amp; Enjoy">
+    <meta property="og:title" content="NIXYMINE - Download & Enjoy">
     <meta property="og:description" content="Portal terbaik untuk mencari dan mengunduh aplikasi dan game Android terbaru.">
     <meta property="og:image" content="https://nixymine.my.id/banner.jpg">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nixymine.my.id/">
-    <meta property="twitter:title" content="NIXYMINE - Download &amp; Enjoy">
+    <meta property="twitter:title" content="NIXYMINE - Download & Enjoy">
     <meta property="twitter:description" content="Portal terbaik untuk mencari dan mengunduh aplikasi dan game Android terbaru.">
     <meta property="twitter:image" content="https://nixymine.my.id/banner.jpg">
     <script type="application/ld+json">
@@ -45,7 +46,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         :root {
@@ -476,7 +477,7 @@
     </style>
     
     <!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4ECNJ19YTE"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4ECNJ19YTE"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -485,7 +486,8 @@
   gtag('config', 'G-4ECNJ19YTE');
 </script>
 
-<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5990225871890476" crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5990225871890476"
+     crossorigin="anonymous"></script>
     
 </head>
 <body>
@@ -564,8 +566,6 @@
                         <button class="view-all-btn">View All &gt;</button>
                     </div>
                     <div class="app-list" id="update-apps-list">
-                        <a href="https://nixymine.my.id/apps/canva-v8102820/" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://nixymine.my.id/apps/canva-v8102820/icon.jpg" alt="Canva v810.2820"></div><div class="card-content"><div class="card-title-row"><h3>Canva v810.2820</h3></div><div class="card-details"><span><strong><i class="fa-solid fa-code-branch"></i> Version</strong> v810.2820</span></div><div class="card-details"><span><strong><i class="fa-solid fa-folder-open"></i> Category</strong> Produktivitas</span></div></div></a>
-                        <a href="https://nixymine.my.id/apps/capcut-v80089/" class="app-card" data-title="APPS"><div class="card-image-container"><img src="https://nixymine.my.id/apps/capcut-v80089/icon.jpg" alt="Capcut v800.89"></div><div class="card-content"><div class="card-title-row"><h3>Capcut v800.89</h3></div><div class="card-details"><span><strong><i class="fa-solid fa-code-branch"></i> Version</strong> v800.89</span></div><div class="card-details"><span><strong><i class="fa-solid fa-folder-open"></i> Category</strong> Alat</span></div></div></a>
                         <a href="NIXY_LINK_APPS" class="app-card" data-title="APPS"><div class="card-image-container"><img src="NIXY_URL_GAMBAR_APPS" alt="NIXY MINE"></div><div class="card-content"><div class="card-title-row"><h3>NIXY_NAMA_APPS</h3></div><div class="card-details"><span><strong><i class="fa-solid fa-code-branch"></i> Version</strong> NIXY_VERSI_APPS</span></div><div class="card-details"><span><strong><i class="fa-solid fa-folder-open"></i> Category</strong> NIXY_CATEGORY_APPS</span></div></div></a>
                     </div>
                     <div class="section-header" id="games-section">
@@ -646,7 +646,7 @@
                         <a href="/" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                     <div class="footer-copyright">
-                        All Right Reserved Copyright © 2025
+                        All Right Reserved Copyright &copy; 2025
                     </div>
                 </footer>
             </div>
@@ -742,6 +742,21 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         
+        const showSectionResults = (title, sourceListSelector) => {
+            homeContent.style.display = 'none';
+            searchResultsContainer.style.display = 'none';
+            categoryResultsContainer.style.display = 'block';
+            categoryResultsTitle.textContent = title;
+            categoryResultsList.innerHTML = '';
+
+            const sourceItems = document.querySelectorAll(`${sourceListSelector} .app-card`);
+            sourceItems.forEach(item => {
+                categoryResultsList.appendChild(item.cloneNode(true));
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
         const animateCards = () => {
             const cards = document.querySelectorAll('#home-content .app-card');
             cards.forEach((card, index) => {
@@ -751,10 +766,21 @@
             });
         };
 
-        populateNewUpdateSection();
+        // --- INI BAGIAN UTAMA LOGIKA ROUTING ---
         generateCategories('#update-apps-list', '#app-categories-grid');
         generateCategories('#update-games-list', '#game-categories-grid');
-        animateCards();
+        
+        const path = window.location.pathname;
+
+        if (path === '/games' || path === '/games/') {
+            showSectionResults('Updated Games', '#update-games-list');
+        } else if (path === '/apps' || path === '/apps/') {
+            showSectionResults('Updated Apps', '#update-apps-list');
+        } else {
+            populateNewUpdateSection();
+            animateCards();
+        }
+        // --- AKHIR DARI BAGIAN LOGIKA ROUTING ---
         
         const showHomeContent = () => {
             homeContent.style.display = 'block';
@@ -843,38 +869,13 @@
 
         headerLogoLink.addEventListener('click', (e) => {
             e.preventDefault();
-            showHomeContent();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.location.href = '/';
         });
 
         document.querySelectorAll('#menu-overlay a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', () => toggleOverlay(menuOverlay, false));
         });
     });
-
-        // --- FUNGSI BARU UNTUK HANDLE URL ---
-const handleUrlRoutes = () => {
-    const path = window.location.pathname; // Mendapatkan path dari URL, misal: "/games"
-
-    if (path.includes('/games')) {
-        const gamesSection = document.getElementById('games-section');
-        if (gamesSection) {
-            // Sembunyikan konten lain jika perlu dan tampilkan hanya game
-            // Untuk sekarang, kita hanya akan scroll
-            gamesSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    } else if (path.includes('/apps')) {
-        const appsSection = document.getElementById('apps-section');
-        if (appsSection) {
-            appsSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-    // Tambahkan else if lain jika ada halaman lain seperti /blog
-};
-
-// Panggil fungsi ini saat halaman dimuat
-handleUrlRoutes();
-    </script>
-
-
-</body></html>
+</script>
+</body>
+</html>
