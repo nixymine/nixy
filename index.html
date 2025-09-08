@@ -373,12 +373,24 @@
             font-weight: 600;
             font-size: 1em;
             transition: var(--transition-smooth);
+            display: block; /* Pastikan item blog ditampilkan sebagai block */
         }
         .blog-post-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 16px var(--shadow-color);
             color: var(--blue-color);
         }
+
+        /* Sembunyikan artikel blog setelah urutan ke-5 secara default */
+        .blog-list:not(.show-all) .blog-post-item:nth-child(n + 6) {
+            display: none;
+        }
+
+        /* Tampilkan semua item blog jika ada class show-all */
+        .blog-list.show-all .blog-post-item {
+            display: block !important;
+        }
+
 
         /* --- UPGRADE TAMPILAN KATEGORI --- */
         .categories-wrapper {
@@ -606,13 +618,17 @@
                             <span class="section-icon" style="background-color: #e5f7f0; color: #4fd18e;"><i class="fa-solid fa-file-alt"></i></span>
                             <h2>Artikel Blog</h2>
                         </div>
+                        <button class="view-all-btn">View All &gt;</button>
                     </div>
-                    <div class="blog-list" id="blog-list">
-                        <a href="#" class="blog-post-item">Cara Mengatasi Lag Saat Bermain Game di Android</a>
-                        <a href="#" class="blog-post-item">10 Aplikasi Edit Video Terbaik untuk Konten Kreator</a>
-                        <a href="#" class="blog-post-item">Tips Keamanan: Cara Menghindari Malware dari Aplikasi APK</a>
-                        <a href="#" class="blog-post-item">Review Game Terbaru: Apakah Layak untuk Diunduh?</a>
+                    <div class="blog-list app-list" id="blog-list">
                         <a href="#" class="blog-post-item">Aplikasi Produktivitas yang Wajib Kamu Punya di 2025</a>
+                        <a href="#" class="blog-post-item">Review Game Terbaru: Apakah Layak untuk Diunduh?</a>
+                        <a href="#" class="blog-post-item">Tips Keamanan: Cara Menghindari Malware dari Aplikasi APK</a>
+                        <a href="#" class="blog-post-item">10 Aplikasi Edit Video Terbaik untuk Konten Kreator</a>
+                        <a href="#" class="blog-post-item">Cara Mengatasi Lag Saat Bermain Game di Android</a>
+                        <a href="#" class="blog-post-item">Panduan Lengkap Root Android untuk Pemula</a>
+                        <a href="#" class="blog-post-item">5 Emulator Android Ringan untuk PC Kentang</a>
+                        <a href="#" class="blog-post-item">Cara Menghemat Baterai HP Android Secara Maksimal</a>
                     </div>
                     </div>
 
@@ -779,7 +795,7 @@
         };
         
         const animateCards = () => {
-            const cards = document.querySelectorAll('#home-content .app-card');
+            const cards = document.querySelectorAll('#home-content .app-card, #home-content .blog-post-item');
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     card.classList.add('card-anim');
@@ -869,9 +885,9 @@
         
         allViewAllButtons.forEach(button => {
             button.addEventListener('click', function() {
-                const appList = this.parentElement.nextElementSibling;
-                if (appList.classList.contains('app-list')) {
-                    appList.classList.add('show-all');
+                const listContainer = this.parentElement.nextElementSibling;
+                if (listContainer && (listContainer.classList.contains('app-list') || listContainer.classList.contains('blog-list'))) {
+                    listContainer.classList.add('show-all');
                     this.style.display = 'none'; 
                 }
             });
