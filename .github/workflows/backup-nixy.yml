@@ -22,7 +22,7 @@ jobs:
       - name: Kirim Backup ke Telegram
         run: |
           # Deskripsi diatur untuk repo "nixy"
-          CAPTION="BackUp | nixy | $(date +'%d-%m-%Y | %H.%M WIB')"
+          CAPTION="$(date +'%d-%m-%Y / %H.%M WIB') / nixymine.my.id"
 
           # Mengirim file zip dari repositori ini
           curl -s -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
