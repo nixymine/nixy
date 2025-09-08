@@ -56,4 +56,10 @@
       <changefreq>yearly</changefreq>
       <priority>0.60</priority>
     </url>
+    <url>
+      <loc>https://nixymine.my.id/apps/youtube-v282928/</loc>
+      <lastmod>2025-09-08</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.80</priority>
+    </url>
 </urlset>
