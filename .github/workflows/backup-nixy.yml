@@ -1,31 +1,38 @@
 # Nama workflow
-name: Backup Repo NIXY ke Telegram (10x Sehari)
+name: Backup Repo ke Telegram Saat Ada Update
 
 # Pemicu workflow
 on:
-  schedule:
-    # Menjalankan 10x sehari, kira-kira setiap 2-3 jam
-    # Jam dalam UTC: 0, 2, 5, 7, 10, 12, 15, 17, 20, 22
-    - cron: '0 0,2,5,7,10,12,15,17,20,22 * * *'
+  # Jalankan setiap kali ada push/update ke branch 'main'
+  push:
+    branches:
+      - main  # Ganti 'main' jika nama branch utama Anda berbeda (misal: 'master')
+
+  # Tombol untuk menjalankan manual (opsional, bagus untuk testing)
   workflow_dispatch:
-    # Tombol untuk menjalankan manual
 
 jobs:
   backup:
     runs-on: ubuntu-latest
     steps:
-      # Langkah 1: Checkout kode repositori
+      # Langkah 1: Checkout kode versi terbaru yang baru saja di-push
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Langkah 2: Kirim file zip ke Telegram
+      # Langkah 2: Membuat file backup .zip dari kode tersebut
+      - name: Create Zip Archive
+        # Membuat zip dengan nama yang menyertakan nama repo
+        run: zip -r ${{ github.event.repository.name }}.zip .
+
+      # Langkah 3: Kirim file .zip yang sudah dibuat ke Telegram
       - name: Kirim Backup ke Telegram
         run: |
-          # Deskripsi diatur untuk repo "nixy"
-          CAPTION="$(date +'%d-%m-%Y / %H.%M WIB') / nixymine.my.id"
+          # Ambil 7 karakter pertama dari kode commit untuk caption
+          COMMIT_HASH=$(echo ${{ github.sha }} | cut -c1-7)
+          CAPTION="Update terbaru pada repo ${{ github.repository }} (commit: ${COMMIT_HASH}) pada $(date +'%d-%m-%Y %H:%M WIB')"
 
-          # Mengirim file zip dari repositori ini
+          # Mengirim file .zip yang ada di runner
           curl -s -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-               -F "document=https://github.com/${{ github.repository }}/archive/refs/heads/main.zip" \
+               -F "document=@${{ github.event.repository.name }}.zip" \
                -F "caption=${CAPTION}" \
                https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
