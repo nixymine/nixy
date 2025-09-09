@@ -80,4 +80,10 @@
       <changefreq>yearly</changefreq>
       <priority>0.80</priority>
     </url>
+    <url>
+      <loc>https://nixymine.my.id/apps/camscanner-v7152508290000/</loc>
+      <lastmod>2025-09-09</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.80</priority>
+    </url>
 </urlset>
