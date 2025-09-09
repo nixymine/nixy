@@ -62,4 +62,10 @@
       <changefreq>yearly</changefreq>
       <priority>0.80</priority>
     </url>
+    <url>
+      <loc>https://nixymine.my.id/games/farm-supermarket-simulator-v20/</loc>
+      <lastmod>2025-09-09</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.80</priority>
+    </url>
 </urlset>
