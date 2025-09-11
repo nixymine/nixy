@@ -27,9 +27,15 @@ jobs:
       # Langkah 3: Kirim file .zip yang sudah dibuat ke Telegram
       - name: Kirim Backup ke Telegram
         run: |
+          # Mengatur timezone ke Waktu Indonesia Barat (WIB / Asia/Jakarta)
+          export TZ="Asia/Jakarta"
+          
           # Ambil 7 karakter pertama dari kode commit untuk caption
           COMMIT_HASH=$(echo ${{ github.sha }} | cut -c1-7)
-          CAPTION="Update terbaru pada repo ${{ github.repository }} (commit: ${COMMIT_HASH}) pada $(date +'%d-%m-%Y %H:%M WIB')"
+          
+          # Buat caption dengan format tanggal dan waktu yang sudah benar (WIB)
+          # Menambahkan WIB secara manual di akhir untuk kejelasan
+          CAPTION="Update terbaru pada repo ${{ github.repository }} (commit: ${COMMIT_HASH}) pada $(date +'%d-%m-%Y %H:%M') WIB"
 
           # Mengirim file .zip yang ada di runner
           curl -s -F "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
