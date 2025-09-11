@@ -281,7 +281,6 @@
         }
         .view-all-btn:hover { background-color: #218838; }
 
-        /* List Aplikasi */
         .app-list { display: grid; gap: 15px; }
         .app-card {
             background-color: var(--card-bg);
@@ -361,7 +360,6 @@
             display: none;
         }
         
-        /* --- Gaya Blog --- */
         .blog-list {
             display: flex;
             flex-direction: column;
@@ -377,7 +375,7 @@
             font-weight: 600;
             font-size: 1em;
             transition: var(--transition-smooth);
-            display: block; /* Pastikan item blog ditampilkan sebagai block */
+            display: block; 
         }
         .blog-post-item:hover {
             transform: translateY(-3px);
@@ -385,18 +383,15 @@
             color: var(--blue-color);
         }
 
-        /* Sembunyikan artikel blog setelah urutan ke-5 secara default */
         .blog-list:not(.show-all) .blog-post-item:nth-child(n + 6) {
             display: none;
         }
 
-        /* Tampilkan semua item blog jika ada class show-all */
         .blog-list.show-all .blog-post-item {
             display: block !important;
         }
 
 
-        /* --- UPGRADE TAMPILAN KATEGORI --- */
         .categories-wrapper {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -432,7 +427,6 @@
             transform: translateY(-2px);
         }
 
-        /* Tampilan Footer */
         .footer-container {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -487,7 +481,6 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* Animasi */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -501,7 +494,6 @@
         .card-anim {
             animation: fadeInUp 0.5s ease-out forwards;
         }
-        /* PERBAIKAN: Mencegah celah saat iklan anchor AdSense muncul */
          body {
             padding-top: 0 !important;
         }
@@ -510,7 +502,7 @@
             top: var(--anchor-ad-top-offset, 0px);
         }
         .card-details strong i {
-            margin-right: 5px; /* Atur jarak sesuai selera */
+            margin-right: 5px;
         }
 
     </style>
@@ -721,7 +713,6 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // --- Elemen UI ---
         const homeContent = document.getElementById('home-content');
         const searchResultsContainer = document.getElementById('search-results-container');
         const categoryResultsContainer = document.getElementById('category-results-container');
@@ -742,7 +733,6 @@
         const allViewAllButtons = document.querySelectorAll('.view-all-btn');
         const headerLogoLink = document.querySelector('.header-logo a');
         
-        // --- Elemen UI Baru untuk Pencarian Artikel ---
         const blogSearchResultsList = document.getElementById('blog-search-results-list');
         const blogSearchHeader = document.getElementById('blog-search-header');
         
@@ -865,12 +855,10 @@
                 return;
             }
 
-            // 1. Kosongkan hasil pencarian sebelumnya
             searchResultsList.innerHTML = '';
             blogSearchResultsList.innerHTML = '';
             blogSearchHeader.style.display = 'none';
 
-            // 2. Cari di Aplikasi dan Game
             const matchingAppsGames = [];
             allItems.forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
@@ -890,7 +878,6 @@
                 }
             });
 
-            // 3. Cari di Artikel Blog
             const matchingBlogItems = [];
             allBlogItems.forEach(item => {
                 const title = item.textContent.toLowerCase();
@@ -902,7 +889,6 @@
                 blogSearchResultsList.appendChild(item.cloneNode(true));
             });
 
-            // 4. Atur tampilan UI berdasarkan hasil
             const appResultsFound = searchResultsList.children.length > 0;
             const blogResultsFound = blogSearchResultsList.children.length > 0;
 
@@ -912,7 +898,6 @@
 
             noResultsMessage.style.display = (!appResultsFound && !blogResultsFound) ? 'block' : 'none';
 
-            // 5. Pindah ke halaman hasil pencarian
             homeContent.style.display = 'none';
             categoryResultsContainer.style.display = 'none';
             searchResultsContainer.style.display = 'block';
@@ -946,21 +931,15 @@
 
         document.querySelectorAll('#menu-overlay a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', () => {
-        // 1. Tetap tutup menu overlay (kode lama)
         toggleOverlay(menuOverlay, false);
 
-        // 2. Ambil ID target dari link (misal: "#games-section")
         const targetId = anchor.getAttribute('href');
         const targetSectionHeader = document.querySelector(targetId);
 
-        // 3. Jika elemen targetnya ada di halaman...
         if (targetSectionHeader) {
-            // ...cari tombol "View All" di dalamnya
             const viewAllButton = targetSectionHeader.querySelector('.view-all-btn');
 
-            // Jika tombolnya ada, klik secara otomatis
             if (viewAllButton) {
-                // Diberi sedikit jeda (50 milidetik) agar animasi scroll selesai dulu
                 setTimeout(() => {
                     viewAllButton.click();
                 }, 50);
@@ -971,4 +950,5 @@
     });
     </script>
 
-</body></html>
+</body>
+</html>
