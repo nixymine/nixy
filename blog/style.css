@@ -185,3 +185,25 @@ header {
 .article-body li {
     margin-bottom: 0.8em;
 }
+/* Styling untuk Link Footer agar Rapi */
+.footer-links {
+    display: flex; /* Membuat link sejajar secara horizontal */
+    flex-wrap: wrap; /* Memastikan link turun ke bawah jika tidak muat */
+    justify-content: center; /* Membuat semua link berada di tengah */
+    gap: 10px 20px; /* Memberi jarak atas/bawah 10px dan kiri/kanan 20px */
+    margin-top: 30px; /* Memberi jarak dari konten di atasnya */
+    padding-top: 20px; /* Memberi jarak di dalam kotak */
+    border-top: 1px solid #eeeeee; /* Memberi garis pemisah tipis */
+}
+
+.footer-links a {
+    color: #555; /* Mengubah warna link menjadi abu-abu gelap */
+    text-decoration: none; /* Menghilangkan garis bawah */
+    font-size: 14px; /* Sedikit memperkecil ukuran font */
+    transition: color 0.2s ease; /* Efek transisi saat disentuh */
+}
+
+.footer-links a:hover {
+    color: #007bff; /* Mengubah warna link saat kursor di atasnya */
+    text-decoration: underline; /* Memunculkan garis bawah saat kursor di atasnya */
+}
