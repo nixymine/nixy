@@ -175,3 +175,13 @@ header {
     border-top: 1px solid var(--border-color);
     margin-top: 40px;
 }
+/* Aturan baru untuk memperbaiki tampilan daftar */
+.article-body ol,
+.article-body ul {
+    padding-left: 25px;
+    margin-bottom: 1.5em;
+}
+
+.article-body li {
+    margin-bottom: 0.8em;
+}
