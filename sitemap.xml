@@ -218,4 +218,10 @@
         <changefreq>yearly</changefreq>
         <priority>0.80</priority>
     </url>
+    <url>
+        <loc>https://nixymine.my.id/apps/lightroom-photo--video-editor-v1053/</loc>
+        <lastmod>2025-09-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.80</priority>
+    </url>
 </urlset>
