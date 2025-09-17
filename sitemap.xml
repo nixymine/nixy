@@ -200,4 +200,10 @@
         <changefreq>yearly</changefreq>
         <priority>0.80</priority>
     </url>
+    <url>
+        <loc>https://nixymine.my.id/games/carx-highway-racing-v1756-8/</loc>
+        <lastmod>2025-09-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.80</priority>
+    </url>
 </urlset>
