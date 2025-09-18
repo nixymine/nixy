@@ -230,4 +230,10 @@
         <changefreq>yearly</changefreq>
         <priority>0.80</priority>
     </url>
+    <url>
+        <loc>https://nixymine.my.id/games/aliens-vs-zombies-invasion-v250912589/</loc>
+        <lastmod>2025-09-18</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.80</priority>
+    </url>
 </urlset>
