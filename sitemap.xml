@@ -307,4 +307,10 @@
         <changefreq>daily</changefreq>
         <priority>0.80</priority>
     </url>
+    <url>
+        <loc>https://nixymine.my.id/apps/capcut---video-editor-v1520/</loc>
+        <lastmod>2025-09-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.80</priority>
+    </url>
 </urlset>
